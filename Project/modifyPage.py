@@ -43,7 +43,7 @@ class InputFees(tk.Frame):
         entryName = tk.Label(topFrame, text = "Enter the amount: ",font=("NuevaStd",20))
         entryName.pack(fill = "both", expand = True,padx = 1, pady = 1, side = "left")
 
-        self.amount = tk.DoubleVar()
+        self.amount = tk.StringVar()
         entry = tk.Entry(topFrame,textvariable = self.amount, justify = "left",width = 50,font=("NuevaStd",15))
         entry.pack(fill = 'both',expand = True ,padx = 5,pady = 5)
 
@@ -62,6 +62,11 @@ class InputFees(tk.Frame):
         answer = tk.messagebox.askyesno("Confirm","Are you sure?")
         if answer == True:
             try:
+                try:
+                    x = float(self.amount.get())
+                except ValueError:
+                    tk.messagebox.showerror("Error!","Invalid input!")
+                    return
                 if os.stat('Payment.txt').st_size > 0: #if not empty and check by size of bytes
                     toRead = open('Payment.txt','r')
                     currentTime = tm.strftime("%A %b %d, %Y %H:%M:%S +0700", tm.localtime())
@@ -118,7 +123,7 @@ class ModifyFees(tk.Frame):
         entryName = tk.Label(topFrame, text = "Enter to change amount: ",font=("NuevaStd",20))
         entryName.pack(fill = "both", expand = True,padx = 1, pady = 1, side = "left")
 
-        self.amount = tk.DoubleVar()
+        self.amount = tk.StringVar()
         entry = tk.Entry(topFrame,textvariable = self.amount, justify = "left",width = 50,font=("NuevaStd",15))
         entry.pack(fill = 'both',expand = True ,padx = 5,pady = 5)
 
@@ -137,6 +142,11 @@ class ModifyFees(tk.Frame):
         answer = tk.messagebox.askyesno("Confirm","Are you sure?")
         if answer == True:
             try:
+                try:
+                    x = float(self.amount.get())
+                except ValueError:
+                    tk.messagebox.showerror("Error!","Invalid input!")
+                    return
                 if os.stat('Payment.txt').st_size > 0: #if not empty and check by size of bytes
                     
                     toRead = open('Payment.txt','r')

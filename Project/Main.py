@@ -57,19 +57,16 @@ class Home(tk.Frame):
         displayBttn.pack(fill = "both", expand = 1,padx = 150, pady = 10)
 
         exitBttn = tk.Button(self, text = 'Exit' , compound = "center", width = 8,\
-                          font=("Lucida Handwriting",15),command = self.exiting(),bg = "#F73030")
+                          font=("Lucida Handwriting",15),command = lambda: self.exiting(),bg = "#F73030")
         exitBttn.pack(fill = "both", expand = 1,padx = 150, pady = 20)
-        
-        
+            
     def exiting(self):
         answer = tk.messagebox.askyesno("Confirm","Exit?")
         if answer == True:
             try:
-                sys.exit() # this always raises SystemExit
-            except SystemExit:
-                print("sys.exit() worked as expected")
+                quit()
             except Exception as ex:
-                print("Error: ",ex) # some other exception got raised
+                tk.messagebox.showerror("Error!",ex) # some other exception got raised
         else:
             return
         
