@@ -3,7 +3,7 @@ from tkinter import ttk
 import time as tm
 import sys
 
-from warningPage import * #user-written files
+from warningPage import WarningPage #user-written files
 from modifyPage import * #user-written files
 from displayPage import * #user-written files
 
@@ -16,7 +16,7 @@ class moneyTracker(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         
         tk.Tk.iconbitmap(self,default="coin2.ico")
-        tk.Tk.wm_title(self,"Money Tracker (0.0.5)")
+        tk.Tk.wm_title(self,"Money Tracker (0.0.7)")
         
         container = tk.Frame(self)
         container.pack(side = "top", fill = "both", expand = True)
@@ -65,7 +65,7 @@ class Home(tk.Frame):
         answer = tk.messagebox.askyesno("Confirm","Exit?")
         if answer == True:
             try:
-                tk.Tk.destroy(self) # this always raises SystemExit
+                sys.exit() # this always raises SystemExit
             except SystemExit:
                 print("sys.exit() worked as expected")
             except Exception as ex:
