@@ -41,9 +41,11 @@ class Home(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         
-        tname = tk.Label(self, text = "Money Usage Tracker",font=("Lucida Handwriting",40, "bold"),bg = "white")
+        tname = tk.Label(self, text = "Money Usage Tracker",
+                         font=("Lucida Handwriting",40, "bold"),bg = "white")
         tname.pack(fill = "both", expand = 1)
-        creator = tk.Label(self, text = "By: Shouh Yann, ID: 59090029",font=("Lucida Handwriting",20, "bold"),bg = "white")
+        creator = tk.Label(self, text = "By: Shouh Yann, ID: 59090029",
+                           font=("Lucida Handwriting",20, "bold"),bg = "white")
         creator.pack(fill = "both", expand = 1)
         
         modifyBttn = tk.Button(self, text = 'Modify' , compound = "center", width = 8,
@@ -56,7 +58,7 @@ class Home(tk.Frame):
                                 command=lambda: controller.show_frame("Display"))
         displayBttn.pack(fill = "both", expand = 1,padx = 150, pady = 10)
 
-        exitBttn = tk.Button(self, text = 'Exit' , compound = "center", width = 8,\
+        exitBttn = tk.Button(self, text = 'Exit' , compound = "center", width = 8,
                           font=("Lucida Handwriting",15),command = lambda: self.exiting(),bg = "#F73030")
         exitBttn.pack(fill = "both", expand = 1,padx = 150, pady = 20)
             
@@ -73,4 +75,3 @@ class Home(tk.Frame):
 if __name__ == "__main__":
     app = moneyTracker()
     app.mainloop()
-    

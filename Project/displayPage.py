@@ -1,14 +1,14 @@
-import tkinter as tk
+from tkinter import *
 from tkinter import ttk
 import time as tm
 import os
 
-class Display(tk.Frame):
+class Display(Frame):
     def __init__(self,parent,controller):
-        tk.Frame.__init__(self, parent)
+        Frame.__init__(self, parent)
         self.controller = controller
         
-        label = tk.Label(self, text="Display", font=("Lucida Handwriting",30, "bold"))
+        label = Label(self, text="Display", font=("Lucida Handwriting",30, "bold"))
         label.pack(side="top", fill="x", pady=10)
 
         newStyle = ttk.Style()
@@ -37,9 +37,9 @@ class Display(tk.Frame):
                            command=lambda: controller.show_frame("Home"), style ="Home.TButton")
         home.pack(fill= "both",expand = True, padx = 300, pady = 5)
         
-class DToday(tk.Frame):
+class DToday(Frame):
     def __init__(self,parent,controller):
-        tk.Frame.__init__(self, parent)
+        Frame.__init__(self, parent)
         self.controller = controller
         
         homeStyle = ttk.Style()
@@ -52,7 +52,7 @@ class DToday(tk.Frame):
                           command=lambda:self.shows(), style = "display.TButton")
         show.pack(fill="x",expand = True, padx = 300, pady = 5)
         
-        home = ttk.Button(self, text="帰れ！！！",
+        home = ttk.Button(self, text="Back to previous page",
                            command=lambda: controller.show_frame("Display"), style ="Home.TButton")
         home.pack(fill= "x",expand = True, padx = 300, pady = 5)
     def shows(self):
@@ -76,22 +76,22 @@ class DToday(tk.Frame):
                     line = line.replace(',',' ')
                     line = line.split()
                         
-                    if(currTime[1] == line[2] and currTime[2] == line[3] and currTime[3] and line[4]): #today
-                        tk.messagebox.showinfo("Today","Today's input: "+str(line[0])+" Baht.")
+                    if(currTime[1] == line[2] and currTime[2] == line[3] and currTime[3] == line[4]): #today
+                        messagebox.showinfo("Today","Today's input: "+str(line[0])+" Baht.")
                         toRead.close() #curr(1 is month, 2 is date, 3 is year),line(2 is month, 3 is date, 4 is year)
                         return
         
                 toRead.close()
-                tk.messagebox.showerror("Error!","Today's one doesn't exist yet!")
+                messagebox.showerror("Error!","Today's one doesn't exist yet!")
                     
             else: #empty file
-                tk.messagebox.showerror("Error!","Empty file!")
+                messagebox.showerror("Error!","Empty file!")
         except OSError: #file doesn't exist
-            tk.messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
+            messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
         
-class DWeek(tk.Frame):
+class DWeek(Frame):
     def __init__(self,parent,controller):
-        tk.Frame.__init__(self, parent)
+        Frame.__init__(self, parent)
         self.controller = controller
 
         showStyle = ttk.Style()
@@ -104,7 +104,7 @@ class DWeek(tk.Frame):
         homeStyle = ttk.Style()
         homeStyle.configure("Home.TButton",font = ('Arial','15','italic'))
 
-        home = ttk.Button(self, text="帰れ！！！",
+        home = ttk.Button(self, text="Back to previous page",
                            command=lambda: controller.show_frame("Display"), style ="Home.TButton")
         home.pack(fill= "x",expand = True, padx = 300, pady = 5)
         
@@ -135,8 +135,8 @@ class DWeek(tk.Frame):
                     line = line.replace(',',' ')
                     line = line.split()
                         
-                    if(currTime[1] == line[2] and currTime[2] == line[3] and currTime[3] and line[4]): #use today as reference
-                        found = True #line 2 = month, 3 = date, 4 = year , ex: 50.0 Tuesday Dec 15, 2016
+                    if(currTime[1] == line[2] and currTime[2] == line[3] and currTime[3] == line[4]): #use today as reference
+                        found = True #line 2 = month, 3 = date, 4 = year , ex: 50.0 Tuesday Dec 15, 2016 
                         
                         if line[1] == 'Sunday': #all checks start from monday and if exists
                             output.append(data[items-6])if (items-6)>= 0 else output.append("0 Monday No input yet")#monday
@@ -224,37 +224,40 @@ class DWeek(tk.Frame):
         
                 toRead.close()
 
-                topFrame = tk.Frame(self)
+                topFrame = Frame(self)
                 topFrame.pack(fill = "both",expand = True)
                 
                 if found == False:
-                    tk.messagebox.showerror("Error!","User haven't input anything this week yet!")
+                    messagebox.showerror("Error!","User haven't input anything this week yet!")
                 else:
                     if self.displayed > 0:
-                        tk.messagebox.showerror("Error!","What are you doing?")
+                        messagebox.showerror("Error!","What are you doing?")
                     elif self.displayed == 0:
                         sumz = 0
                         for line in output:
                             line = line.split()
-                            display = tk.Label(topFrame, text = "Amount: %sBaht \tDay: %s \tDate: %s %s %s" % (line[0],line[1],line[2],line[3],line[4]),font=("NuevaStd",14))
+                            display = Label(topFrame,
+                                               text = "Amount: %sBaht \tDay: %s \tDate: %s %s %s"\
+                                            % (line[0],line[1],line[2],line[3],line[4]),
+                                               font=("NuevaStd",14))
                             display.pack(fill = "both", expand = True,padx = 1, side = "top")
                             sumz += float(line[0])
 
-                        total = tk.Label(topFrame, text = "Total of this month is: %.2f Baht"%(sumz),font=("NuevaStd",20))
+                        total = Label(topFrame, text = "Total of this month is: %.2f Baht"%(sumz),font=("NuevaStd",20))
                         total.pack(fill = "both", expand = True,padx = 1, pady = 1, side = "top")
                         
                         self.displayed = 1
             else: #empty file
-                tk.messagebox.showerror("Error!","Empty file!")
+                messagebox.showerror("Error!","Empty file!")
         except OSError: #file doesn't exist
-            tk.messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
+            messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
 
-class DMonth(tk.Frame):
+class DMonth(Frame):
     def __init__(self,parent,controller):
-        tk.Frame.__init__(self, parent)
+        Frame.__init__(self, parent)
         self.controller = controller
         
-        bottomFrame = tk.Frame(self)
+        bottomFrame = Frame(self)
         bottomFrame.pack(fill = "both",expand = True)
         
         showStyle = ttk.Style()
@@ -267,7 +270,7 @@ class DMonth(tk.Frame):
         homeStyle = ttk.Style()
         homeStyle.configure("Home.TButton",font = ('Arial','15','italic'))
         
-        home = ttk.Button(bottomFrame, text="帰れ！！！",
+        home = ttk.Button(bottomFrame, text="Back to previous page",
                            command=lambda: controller.show_frame("Display"), style ="Home.TButton")
         home.pack(fill= "x",expand = True, padx = 300, pady = 5)
 
@@ -303,37 +306,47 @@ class DMonth(tk.Frame):
         
                 toRead.close()
 
-                topFrame = tk.Frame(self)
+                topFrame = Frame(self)
                 topFrame.pack(fill = "both",expand = True)
                 
                 if found == False:
-                    tk.messagebox.showerror("Error!","User haven't input anything this month yet!")
+                    messagebox.showerror("Error!","User haven't input anything this month yet!")
                 else:
                     if self.displayed > 0:
-                        tk.messagebox.showerror("Error!","What are you doing?")
+                        messagebox.showerror("Error!","What are you doing?")
                     elif self.displayed == 0:
                         sumz = 0
+                        
+                        frame1 = Frame(Tk())
+                        frame1.pack()
+                        vbar=Scrollbar(frame1,orient=VERTICAL) #vbar = vertical bar
+                        vbar.pack(side=RIGHT,fill=Y)
+                        text = Text(frame1, width = 75, height = 33, wrap = WORD,yscrollcommand = vbar.set)
+                        text.pack()
+                        vbar.config(command=text.yview)
+                        
                         for line in output:
                             line = line.split()
-                            display = tk.Label(topFrame, text = "Amount: %s Baht \tDate: %s %s, %s" % (line[0],line[1],line[2],line[3]),font=("NuevaStd",14))
-                            display.pack(fill = "both", expand = True,padx = 1, side = "top")
+                            text.insert(END, "Amount: %s Baht \tDate: %s %s, %s\n" % (line[0],line[1],line[2],line[3]))
+                            text.config(font=("NuevaStd",14))
                             sumz += float(line[0])
 
-                        total = tk.Label(topFrame, text = "Total of this month is: %.2f Baht"%(sumz),font=("NuevaStd",20))
-                        total.pack(fill = "both", expand = True,padx = 1, pady = 1, side = "top")
+                        text.insert(END, "------------------------------------------------------\n")
+                        text.insert(END, "Total of this month is: %.2f Baht"%(sumz))
+                        text.config(font=("NuevaStd",14),state=DISABLED)
                         
                         self.displayed = 1
             else: #empty file
-                tk.messagebox.showerror("Error!","Empty file!")
+                messagebox.showerror("Error!","Empty file!")
         except OSError: #file doesn't exist
-            tk.messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
+            messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
                 
-class DYear(tk.Frame):
+class DYear(Frame):
     def __init__(self,parent,controller):
-        tk.Frame.__init__(self, parent)
+        Frame.__init__(self, parent)
         self.controller = controller
-
-        bottomFrame = tk.Frame(self)
+                         
+        bottomFrame = Frame(self)
         bottomFrame.pack(fill = "both",expand = True)
         
         showStyle = ttk.Style()
@@ -346,7 +359,7 @@ class DYear(tk.Frame):
         homeStyle = ttk.Style()
         homeStyle.configure("Home.TButton",font = ('Arial','15','italic'))
         
-        home = ttk.Button(bottomFrame, text="帰れ！！！",
+        home = ttk.Button(bottomFrame, text="Back to previous page",
                            command=lambda: controller.show_frame("Display"), style ="Home.TButton")
         home.pack(fill= "x",expand = True, padx = 300, pady = 5)
 
@@ -382,27 +395,37 @@ class DYear(tk.Frame):
         
                 toRead.close()
 
-                topFrame = tk.Frame(self)
+                topFrame = Frame(self)
                 topFrame.pack(fill = "both",expand = True)
                 
                 if found == False:
-                    tk.messagebox.showerror("Error!","User haven't input anything this year yet!")
+                    messagebox.showerror("Error!","User haven't input anything this year yet!")
                 else:
                     if self.displayed > 0:
-                        tk.messagebox.showerror("Error!","What are you doing?")
+                        messagebox.showerror("Error!","What are you doing?")
                     elif self.displayed == 0:
                         sumz = 0
+
+                        frame1 = Frame(Tk())
+                        frame1.pack()
+                        vbar=Scrollbar(frame1,orient=VERTICAL)
+                        vbar.pack(side=RIGHT,fill=Y)
+                        text = Text(frame1, width = 75, height = 367, wrap = WORD,yscrollcommand = vbar.set)
+                        text.pack()
+                        vbar.config(command=text.yview)
+                        
                         for line in output:
                             line = line.split()
-                            display = tk.Label(topFrame, text = "Amount: %s Baht \tDate: %s %s, %s" % (line[0],line[1],line[2],line[3]),font=("NuevaStd",14))
-                            display.pack(fill = "both", expand = True,padx = 1, side = "top")
+                            text.insert(END, "Amount: %s Baht \tDate: %s %s, %s\n" % (line[0],line[1],line[2],line[3]))
+                            text.config(font=("NuevaStd",14))
                             sumz += float(line[0])
 
-                        total = tk.Label(topFrame, text = "Total of this year is: %.2f Baht"%(sumz),font=("NuevaStd",20))
-                        total.pack(fill = "both", expand = True,padx = 1, pady = 1, side = "top")
+                        text.insert(END, "------------------------------------------------------\n")
+                        text.insert(END, "Total of this year is: %.2f Baht"%(sumz))
+                        text.config(font=("NuevaStd",14),state=DISABLED)
                         
                         self.displayed = 1
             else: #empty file
-                tk.messagebox.showerror("Error!","Empty file!")
+                messagebox.showerror("Error!","Empty file!")
         except OSError: #file doesn't exist
-            tk.messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
+            messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")

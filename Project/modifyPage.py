@@ -54,7 +54,7 @@ class InputFees(tk.Frame):
                                 command = lambda: self.inputFile(),style = "Home.TButton")
         inputMoney.pack(fill="x",expand = True, padx =250, pady = 1,side="top")
         
-        home = ttk.Button(bottomFrame, text="帰れ！！！",
+        home = ttk.Button(bottomFrame, text="To previous page",
                            command=lambda: controller.show_frame("Modify"), style ="Home.TButton")
         home.pack(fill= "x",expand = True, padx = 300, pady = 1,side = "bottom")
         
@@ -67,6 +67,13 @@ class InputFees(tk.Frame):
                 except ValueError:
                     tk.messagebox.showerror("Error!","Invalid input!")
                     return
+                if(x>1000000):
+                    tk.messagebox.showerror("AmountError!","More than a million!")
+                    return
+                elif(x<-1000000):
+                    tk.messagebox.showerror("AmountError!","Less than negative million!")
+                    return
+                
                 if os.stat('Payment.txt').st_size > 0: #if not empty and check by size of bytes
                     toRead = open('Payment.txt','r')
                     currentTime = tm.strftime("%A %b %d, %Y %H:%M:%S +0700", tm.localtime())
@@ -134,7 +141,7 @@ class ModifyFees(tk.Frame):
                                 command = lambda: self.inputFile(),style = "Home.TButton")
         inputMoney.pack(fill="x",expand = True, padx =250, pady = 1,side="top")
         
-        home = ttk.Button(bottomFrame, text="帰れ！！！",
+        home = ttk.Button(bottomFrame, text="To previous page",
                            command=lambda: controller.show_frame("Modify"), style ="Home.TButton")
         home.pack(fill= "x",expand = True, padx = 300, pady = 1,side = "bottom")
         
@@ -147,6 +154,13 @@ class ModifyFees(tk.Frame):
                 except ValueError:
                     tk.messagebox.showerror("Error!","Invalid input!")
                     return
+                if(x>1000000):
+                    tk.messagebox.showerror("AmountError!","More than a million!")
+                    return
+                elif(x<-1000000):
+                    tk.messagebox.showerror("AmountError!","Less than negative million!")
+                    return
+                
                 if os.stat('Payment.txt').st_size > 0: #if not empty and check by size of bytes
                     
                     toRead = open('Payment.txt','r')
