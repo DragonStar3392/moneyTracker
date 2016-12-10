@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import time as tm
 import sys
+from tkinter import messagebox
 
 from warningPage import WarningPage #user-written files
 from modifyPage import * #user-written files
@@ -16,7 +17,7 @@ class moneyTracker(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         
         tk.Tk.iconbitmap(self,default="coin2.ico")
-        tk.Tk.wm_title(self,"Money Tracker (0.0.7)")
+        tk.Tk.wm_title(self,"Money Tracker (0.1.0)")
         
         container = tk.Frame(self)
         container.pack(side = "top", fill = "both", expand = True)
@@ -63,12 +64,12 @@ class Home(tk.Frame):
         exitBttn.pack(fill = "both", expand = 1,padx = 150, pady = 20)
             
     def exiting(self):
-        answer = tk.messagebox.askyesno("Confirm","Exit?")
+        answer = messagebox.askyesno("Confirm","Exit?")
         if answer == True:
             try:
                 quit()
             except Exception as ex:
-                tk.messagebox.showerror("Error!",ex) # some other exception got raised
+                messagebox.showerror("Error!",ex) # some other exception got raised
         else:
             return
         

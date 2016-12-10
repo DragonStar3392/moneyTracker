@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import time as tm
 import os
 
@@ -59,19 +60,19 @@ class InputFees(tk.Frame):
         home.pack(fill= "x",expand = True, padx = 300, pady = 1,side = "bottom")
         
     def inputFile(self):
-        answer = tk.messagebox.askyesno("Confirm","Are you sure?")
+        answer = messagebox.askyesno("Confirm","Are you sure?")
         if answer == True:
             try:
                 try:
                     x = float(self.amount.get())
                 except ValueError:
-                    tk.messagebox.showerror("Error!","Invalid input!")
+                    messagebox.showerror("Error!","Invalid input!")
                     return
                 if(x>1000000):
-                    tk.messagebox.showerror("AmountError!","More than a million!")
+                    messagebox.showerror("AmountError!","More than a million!")
                     return
                 elif(x<-1000000):
-                    tk.messagebox.showerror("AmountError!","Less than negative million!")
+                    messagebox.showerror("AmountError!","Less than negative million!")
                     return
                 
                 if os.stat('Payment.txt').st_size > 0: #if not empty and check by size of bytes
@@ -93,8 +94,8 @@ class InputFees(tk.Frame):
                         line = line.replace(',',' ')
                         line = line.split()
                         
-                        if(currTime[1] == line[2] and currTime[2] == line[3] and currTime[3] and line[4]):
-                            tk.messagebox.showerror("Error!","Today's chance is done!")
+                        if(currTime[1] == line[2] and currTime[2] == line[3] and currTime[3] == line[4]):
+                            messagebox.showerror("Error!","Today's chance is done!")
                             toRead.close() #curr(1 is month, 2 is date, 3 is year),line(2 is month, 3 is date, 4 is year)
                             return
         
@@ -112,7 +113,7 @@ class InputFees(tk.Frame):
                     toWrite.close()
                    
             except OSError: #file doesn't exist
-                tk.messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
+                messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
         else:
             return
 
@@ -146,19 +147,19 @@ class ModifyFees(tk.Frame):
         home.pack(fill= "x",expand = True, padx = 300, pady = 1,side = "bottom")
         
     def inputFile(self):
-        answer = tk.messagebox.askyesno("Confirm","Are you sure?")
+        answer = messagebox.askyesno("Confirm","Are you sure?")
         if answer == True:
             try:
                 try:
                     x = float(self.amount.get())
                 except ValueError:
-                    tk.messagebox.showerror("Error!","Invalid input!")
+                    messagebox.showerror("Error!","Invalid input!")
                     return
                 if(x>1000000):
-                    tk.messagebox.showerror("AmountError!","More than a million!")
+                    messagebox.showerror("AmountError!","More than a million!")
                     return
                 elif(x<-1000000):
-                    tk.messagebox.showerror("AmountError!","Less than negative million!")
+                    messagebox.showerror("AmountError!","Less than negative million!")
                     return
                 
                 if os.stat('Payment.txt').st_size > 0: #if not empty and check by size of bytes
@@ -183,7 +184,7 @@ class ModifyFees(tk.Frame):
                         temp = temp.replace(',',' ')
                         temp = temp.split()
                         
-                        if(currTime[1] == temp[2] and currTime[2] == temp[3] and currTime[3] and temp[4]): #found
+                        if(currTime[1] == temp[2] and currTime[2] == temp[3] and currTime[3] == temp[4]): #found
                             toWrite.write(str(self.amount.get())+" "+currentTime+"\n")
                         else:
                             toWrite.write(line)
@@ -195,10 +196,10 @@ class ModifyFees(tk.Frame):
                     os.rename('PaymentTemp.txt','Payment.txt')
                     
                 else: #empty file
-                    tk.messagebox.showerror("Error!","Unable to open file cause file is empty!")
+                    messagebox.showerror("Error!","Unable to open file cause file is empty!")
                    
             except OSError: #file doesn't exist
-                tk.messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
+                messagebox.showerror("Error!","Unable to open file cause it doesn't exist!")
 
         else:
             return
